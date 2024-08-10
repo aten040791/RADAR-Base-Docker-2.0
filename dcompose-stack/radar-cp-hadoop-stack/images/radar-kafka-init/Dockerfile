@@ -24,7 +24,7 @@ RUN curl -L#o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-${
 
 RUN curl -L#o /usr/share/java/avro-tools.jar https://archive.apache.org/dist/avro/avro-1.8.2/java/avro-tools-1.8.2.jar
 
-ARG SCHEMAS_VERSION=0.4.2
+ARG SCHEMAS_VERSION=${RADAR_SCHEMAS_VERSION}
 
 ENV RADAR_SCHEMAS_VERSION=${SCHEMAS_VERSION}
 
