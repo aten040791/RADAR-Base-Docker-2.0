@@ -25,6 +25,8 @@ networks:
     internal: true
   hadoop:
     external: true
+  external:
+    driver: bridge
 
 volumes:
   kafka-1-data: {}
@@ -330,19 +332,15 @@ services:
   # RADAR Dashboard                                                           #
   #---------------------------------------------------------------------------#
   dashboard:
-    image: radarbase/radar-dashboard:dev
+    image: radarcns/radar-dashboard:2.1.0
     networks:
       - api
     depends_on:
       - rest-api
     restart: always
-    volumes:
-      - /home/camnh/Desktop/RADAR-Docker/RADAR-Base-Docker-2.0/dcompose-stack/radar-cp-hadoop-stack/init.sh:/init.sh
-      - /home/camnh/Desktop/RADAR-Docker/RADAR-Base-Docker-2.0/dcompose-stack/radar-cp-hadoop-stack/main.437a435f5a02d3c36877.js:/var/www/main.437a435f5a02d3c36877.js
     environment:
-      API_URI: http://${SERVER_NAME}/api
+      API_URI: https://${SERVER_NAME}/api
       BASE_HREF: /dashboard/
-    command: ["/bin/sh", "-c", "./init.sh"]
     healthcheck:
       test: ["CMD", "wget", "-s", "http://localhost:80/"]
       interval: 1m
@@ -699,8 +697,8 @@ services:
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       MANAGEMENTPORTAL_MAIL_FROM: ${FROM_EMAIL}
-      MANAGEMENTPORTAL_COMMON_BASEURL: http://192.168.1.108/
-      MANAGEMENTPORTAL_COMMON_MANAGEMENT_PORTAL_BASE_URL: http://192.168.1.108/managementportal
+      MANAGEMENTPORTAL_COMMON_BASEURL: https://${SERVER_NAME}/
+      MANAGEMENTPORTAL_COMMON_MANAGEMENT_PORTAL_BASE_URL: https://${SERVER_NAME}/managementportal
       MANAGEMENTPORTAL_FRONTEND_CLIENT_SECRET: ${MANAGEMENTPORTAL_FRONTEND_CLIENT_SECRET}
       MANAGEMENTPORTAL_OAUTH_CLIENTS_FILE: /mp-includes/config/oauth_client_details.csv
       MANAGEMENTPORTAL_CATALOGUE_SERVER_ENABLE_AUTO_IMPORT: ${MANAGEMENTPORTAL_CATALOGUE_SERVER_ENABLE_AUTO_IMPORT}
@@ -735,6 +733,9 @@ services:
       POSTGRES_MULTIPLE_DATABASES: managementportal,restsourceauthorizer
     networks:
       - management
+      - external
+    ports:
+      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "PGPASSWORD='${POSTGRES_PASSWORD}' psql -U '${POSTGRES_USER}' managementportal -l || exit 1"]
       interval: 1m30s
@@ -811,3 +812,4 @@ services:
         interval: 1m30s
         timeout: 5s
         retries: 3
+
