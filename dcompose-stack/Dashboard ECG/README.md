@@ -1,6 +1,7 @@
 # Guideline for installation
 Make sure to pull the latest commit on RADAR-Docker repository because the repository exposes port 5432 Postgresql inside docker-compose to outside world.
 
+Make sure to import `medical_tests.sql` script to database for creating new table. 
 
 ## Prerequisite
 1. Make sure to start ManagementPortal first before running the scripts
