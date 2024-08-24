@@ -37,13 +37,12 @@ function Login() {
       const res = await axiosInstance.post(routes.api.loginManagementPortal, form_data)
       if (res.status === 200) {
         localStorage.setItem('token', res.data.access_token)
-        navigate(routes.browser.home)
-        return;
       }
     } catch (e) {
       setAuthFailed(true)
     }
     
+    navigate(routes.browser.home)
   }
 
   const handleClose = () => {
