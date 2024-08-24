@@ -49,7 +49,7 @@ const ViewDetailMedicalTest = () => {
                     <p><strong>Notes:</strong> {test.notes}</p>
                     <p><strong>SubjectId: </strong>{test.subject_id}</p>
                     <p><strong>ECG Data:</strong> {test.ecg}</p>
-                    <PlotECGDiagram timeArray={ecgData.time} amplitudeArray={ecgData.amplitude} />
+                    <PlotECGDiagram x={ecgData.time} y={ecgData.amplitude} />
                 </div>
                 <div className="card-footer">
                     <button type="button" className="btn btn-secondary" onClick={() => history.back()}>

@@ -1,12 +1,12 @@
 import Plot from 'react-plotly.js';
 
-const PlotECGDiagram = ({timeArray, amplitudeArray}) => {
+const PlotECGDiagram = ({x, y}) => {
     return (
         <Plot
         data={[
             {
-                x: timeArray,
-                y: amplitudeArray,
+                x: x,
+                y: y,
                 mode: 'lines',
                 line: { color: 'blue' },
             },
@@ -14,7 +14,6 @@ const PlotECGDiagram = ({timeArray, amplitudeArray}) => {
         layout={{
             title: 'ECG Signal',
             xaxis: {
-                title: 'Time (s)',
                 rangeslider: { visible: true },  // Enable the range slider
                 rangeselector: {               // Add range selector buttons
                     buttons: [
@@ -35,7 +34,6 @@ const PlotECGDiagram = ({timeArray, amplitudeArray}) => {
                 },
             },
             yaxis: {
-                title: 'Amplitude (mV)',
                 fixedrange: false,  // Allow zooming on the Y-axis
             },
             autosize: true,
