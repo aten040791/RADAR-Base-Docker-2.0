@@ -1,7 +1,9 @@
 # Guideline for installation
 Make sure to pull the latest commit on RADAR-Docker repository because the repository exposes port 5432 Postgresql inside docker-compose to outside world.
 
-Make sure to import `medical_tests.sql` script to database for creating new table. 
+Make sure to import `medical_tests.sql` script to database for creating new table. To connect to Postgresql table, using Navicat or database which can connect to
+Postgresql. In Navicat, create new connection to Postgresql, host is VMWare Ip in bridge format. Port is 5432, db username is in .env of `dcompose-stack`,
+db password is in .env of `dcompose-stack`. When logged in, import file `medical_tests.sql`
 
 ## Prerequisite
 1. Make sure to start ManagementPortal first before running the scripts
