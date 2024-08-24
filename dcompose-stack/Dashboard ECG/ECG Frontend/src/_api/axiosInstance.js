@@ -14,8 +14,20 @@ const axiosInstance = axios.create({
 const authManagementPortalAxiosInstance = axios.create({
     baseURL: buildProtocolScheme() + "://" + configs.app.host + "/managementportal/api" ,
     headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
+        Authorization: 'Bearer ' + localStorage.getItem('token') 
     }
+})
+
+//adding bearer token
+authManagementPortalAxiosInstance.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
 })
 
 const localAxiosInstance = axios.create({
