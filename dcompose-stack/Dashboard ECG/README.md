@@ -15,8 +15,11 @@ db password is in .env of `dcompose-stack`. When logged in, import file `medical
 3. Copy `.env.template` to `.env`
 4. Modify params inside `.env` to match with Postgresql
 5. Create folder `storage` in the same level with ECG Backend
+<<<<<<< HEAD
 
 To run backend, run `npm run dev` in ECG backend folder
+=======
+>>>>>>> Add correct sample data
 
 ## Start ECGFrontend
 1. Go to folder `ECG Frontend`
