@@ -12,6 +12,7 @@ Make sure to import `medical_tests.sql` script to database for creating new tabl
 2. Run command `npm install`
 3. Copy `.env.template` to `.env`
 4. Modify params inside `.env` to match with Postgresql
+5. Create folder `storage` in the same level with ECG Backend
 
 ## Start ECGFrontend
 1. Go to folder `ECG Frontend`
