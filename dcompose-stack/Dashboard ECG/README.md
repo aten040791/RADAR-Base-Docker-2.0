@@ -14,8 +14,13 @@ Make sure to import `medical_tests.sql` script to database for creating new tabl
 4. Modify params inside `.env` to match with Postgresql
 5. Create folder `storage` in the same level with ECG Backend
 
+To run backend, run `npm run dev` in ECG backend folder
+
 ## Start ECGFrontend
 1. Go to folder `ECG Frontend`
 2. Run command `npm install`
 3. Copy `.env.template` to `.env`
-4. Modify params inside `.env` to match with Vmware host API by running `ifconfig`, the other params leave unchanged
+4. Modify params inside `.env` to match with Vmware host API by running `ifconfig`, the other params leave unchanged.
+5. When upload file CSV for testing ECG frontend, choose file `ecg.csv` in this folder, which has the format: `x,y` in the first row. The ability to change column will be implemented later.
+
+To run frontend, run `npm run dev` in ECG backend folder
