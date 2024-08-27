@@ -3,6 +3,7 @@ const router = express.Router()
 const pool = require('./core/database');
 const {upload} = require('./core/storage');
 const readCSVFile = require('./utils/fileStorage');
+const fs = require('fs')
 
 // Create a new medical test
 router.post('/', upload.single('ecg'), async (req, res) => {
@@ -45,7 +46,10 @@ router.get('/:id', async (req, res) => {
         
         res.status(200).json({
             ...result.rows[0],
-            ecgData
+            ecgData: ecgData.map((item,index) => ({
+                x: index,
+                y: item.y
+            }))
         });
     } catch (err) {
         console.error(err);
@@ -90,10 +94,18 @@ router.put('/:id',upload.single('ecg'), async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
+        const oldRecord = await pool.query('SELECT * FROM medical_tests WHERE test_id = $1', [id]);
+        const recordWantsDelete = result.rows[0]
+
         const result = await pool.query('DELETE FROM medical_tests WHERE test_id = $1 RETURNING *', [id]);
         if (result.rows.length === 0) {
             return res.status(404).send('Test not found');
         }
+        fs.unlink(`./storage/${recordWantsDelete.ecg}`, (err) => {
+            if (err) {
+                console.error(`Error deleting the file: ${err.message}`);
+            }
+        });       
         res.status(200).send('Test deleted successfully');
     } catch (err) {
         console.error(err);
