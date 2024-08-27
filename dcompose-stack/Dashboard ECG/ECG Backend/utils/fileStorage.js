@@ -9,7 +9,9 @@ function readCSVFile(csvFileName) {
         const results = [];
         fs.createReadStream(csvFilePath)
         .pipe(csv())
-        .on('data', (data) => results.push(data))
+        .on('data', (data) => {
+            results.push(data)
+        })
         .on('end', () => {
             return resolve(results)
         })
