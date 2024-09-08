@@ -21,10 +21,14 @@ DEPENDENT=$(find merged/commons -name "*.avsc" -exec grep -Eq "$DEPENDENT_REGEX"
 # remove dependent files from all files to get independent files
 INDEPENDENT=$(printf "${DEPENDENT}" | comm -23 merged/file_list -)
 
+printf "===> Begin compilation <==== \n"
 printf "===> Independent schemas:\n${INDEPENDENT}\n"
 printf "===> Dependent schemas:\n${DEPENDENT}\n"
 
-java -jar "${AVRO_TOOLS}" compile -string schema ${INDEPENDENT} ${DEPENDENT} java/src 2>/dev/null
+printf "===> Compiling Independent and dependent schemas .asvc\n"
+java -jar "${AVRO_TOOLS}" compile -string schema ${INDEPENDENT} ${DEPENDENT} java/src
+
+printf "===> Compile to class file\n"
 find java/src -name "*.java" -print0 | xargs -0 javac -cp /usr/lib/*:java/classes -d java/classes -sourcepath java/src 
 # Update the radar schemas so the tools find the new classes in classpath
 jar uf /usr/lib/radar-schemas-commons-${RADAR_SCHEMAS_VERSION}.jar -C java/classes .
