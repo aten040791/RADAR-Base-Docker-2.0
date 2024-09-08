@@ -1,0 +1,13 @@
+#====================================== Polar H10 device =====================================#
+vendor: Polar
+model: H10
+version: 1.0.0
+app_provider: .polar.PolarH10ServiceProvider
+data:
+  - type: ECG
+    sample_rate:
+      dynamic: true
+    unit: MICRO_VOLT
+    processing_state: RAW
+    topic: android_polar_h10_ecg
+    value_schema: .passive.polar.PolarH10Ecg

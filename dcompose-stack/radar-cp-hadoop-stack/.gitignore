@@ -1,0 +1,5 @@
+/.env
+/etc/smtp.env
+/radar.yml
+/output/
+/timescaledata

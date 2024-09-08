@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.passive.polar",
+  "type": "record",
+  "name": "PolarH10Ecg",
+  "doc": "Data from Polar multi-channel electrocardiography electrodes",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." } ,
+    { "name": "ecg", "type": "float", "doc": "ECG signal (µV)." }
+  ]
+}
