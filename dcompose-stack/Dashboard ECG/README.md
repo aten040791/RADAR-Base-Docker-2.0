@@ -21,6 +21,8 @@ To run backend, run `npm run dev` in ECG backend folder
 =======
 >>>>>>> Add correct sample data
 
+To run backend, run `npm run dev` in ECG backend folder
+
 ## Start ECGFrontend
 1. Go to folder `ECG Frontend`
 2. Run command `npm install`
