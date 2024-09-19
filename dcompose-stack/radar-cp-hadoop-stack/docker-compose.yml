@@ -288,17 +288,19 @@ services:
   # RADAR Hot Storage                                                         #
   #---------------------------------------------------------------------------#
   hotstorage:
-    image: radarbase/radar-hotstorage:0.1
+    image: mongo:4.4.29
     networks:
       - hotstorage
+    container_name: radarbase_hotstorage
     volumes:
-      - "${MONGODB_DIR}/db:/data/db"
-      - "${MONGODB_DIR}/configdb:/data/configdb"
+      - "${MONGODB_DIR}/db:/data/db:rw"
+      - "${MONGODB_DIR}/configdb:/data/configdb:rw"
+      - "./hotstorage/initdb.sh:/initdb.sh"
     restart: always
     environment:
-      RADAR_USER: ${HOTSTORAGE_USERNAME}
-      RADAR_PWD: ${HOTSTORAGE_PASSWORD}
       RADAR_DB: ${HOTSTORAGE_NAME}
+      RADAR_USER: ${HOTSTORAGE_USERNAME}       # Username for the new user
+      RADAR_PWD: ${HOTSTORAGE_PASSWORD}           # Password for the new user
     healthcheck:
       test: ["CMD", "mongo", "-u", "${HOTSTORAGE_USERNAME}", "-p", "${HOTSTORAGE_PASSWORD}", "${HOTSTORAGE_NAME}", "--eval", "db"]
       interval: 1m
@@ -320,6 +322,7 @@ services:
     restart: always
     volumes:
       - "./etc/rest-api:/usr/local/conf/radar/rest-api"
+      - "./output:/usr/local/conf/radar/output"
     environment:
       RADAR_IS_CONFIG_LOCATION: usr/local/conf/radar/rest-api/radar-is.yml
     healthcheck:
@@ -734,8 +737,6 @@ services:
     networks:
       - management
       - external
-    ports:
-      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "PGPASSWORD='${POSTGRES_PASSWORD}' psql -U '${POSTGRES_USER}' managementportal -l || exit 1"]
       interval: 1m30s

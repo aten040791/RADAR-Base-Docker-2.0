@@ -102,6 +102,14 @@ KAFKA_SCHEMA_RETENTION_MS=${KAFKA_SCHEMA_RETENTION_MS:-5400000000}
 KAFKA_SCHEMA_RETENTION_CMD='kafka-configs --zookeeper "${KAFKA_ZOOKEEPER_CONNECT}" --entity-type topics --entity-name _schemas --alter --add-config min.compaction.lag.ms='${KAFKA_SCHEMA_RETENTION_MS}',cleanup.policy=compact'
 sudo-linux bin/radar-docker exec -T kafka-1 bash -c "$KAFKA_SCHEMA_RETENTION_CMD"
 
+
+#Initializing hotstorage
+echo "==> Setting up hotstorage"
+sudo-linux bin/radar-docker up -d hotstorage
+sudo-linux docker exec radarbase_hotstorage chmod +x /initdb.sh
+sudo-linux docker exec radarbase_hotstorage sh -c "/initdb.sh"
+
+
 echo "==> Configuring MongoDB Connector"
 # Update sink-mongo.properties
 ensure_variable 'mongo.username=' $HOTSTORAGE_USERNAME etc/mongodb-connector/sink-mongo.properties
@@ -114,13 +122,7 @@ KAFKA_INIT_OPTS=(
   )
 
 # Set topics
-if [ -z "${COMBINED_AGG_TOPIC_LIST}"]; then
-  COMBINED_AGG_TOPIC_LIST=$(sudo-linux docker run "${KAFKA_INIT_OPTS[@]}" list_aggregated.sh 2>/dev/null | tail -n 1)
-  if [ -n "${RADAR_AGG_TOPIC_LIST}" ]; then
-    COMBINED_AGG_TOPIC_LIST="${RADAR_AGG_TOPIC_LIST},${COMBINED_AGG_TOPIC_LIST}"
-  fi
-fi
-ensure_variable 'topics=' "${COMBINED_AGG_TOPIC_LIST}" etc/mongodb-connector/sink-mongo.properties
+ensure_variable 'topics=' "android_polar_h10_ecg" etc/mongodb-connector/sink-mongo.properties
 
 echo "==> Configuring HDFS Connector"
 if [ -z "${COMBINED_RAW_TOPIC_LIST}"]; then

@@ -72,11 +72,12 @@ HDFS_COMMAND=(
     "$HDFS_FILE"
   )
 
-sudo-linux docker run ${DOCKER_OPTS} \
+sudo-linux docker run "${DOCKER_OPTS}" \
     -t --rm --network hadoop \
     -v "$OUTPUT_DIR:$HDFS_OUTPUT_DIR" \
     -e RADAR_HDFS_RESTRUCTURE_OPTS \
     $DOCKER_IMAGE "${HDFS_COMMAND[@]}"
+   
 
 if ! ${RESTRUCTURE_ENABLE_SNAPSHOTS:-true}; then
   echo "Snapshots disabled. No snapshots will be made."

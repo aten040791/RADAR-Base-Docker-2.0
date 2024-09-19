@@ -19,6 +19,7 @@ OUTPUT_DIR="$(cd "$(dirname "$OUTPUT_DIR")"; pwd)/$(basename "$OUTPUT_DIR")"
 HDFS_OUTPUT_DIR=/home/output
 # HDFS command to run
 HDFS_COMMAND="hdfs dfs -get $HDFS_FILE $HDFS_OUTPUT_DIR"
+echo $HDFS_COMMAND
 DOCKER_OPTS=(
   -i --rm
   --network hadoop
