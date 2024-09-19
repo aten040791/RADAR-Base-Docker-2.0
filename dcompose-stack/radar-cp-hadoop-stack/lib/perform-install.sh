@@ -104,10 +104,10 @@ sudo-linux bin/radar-docker exec -T kafka-1 bash -c "$KAFKA_SCHEMA_RETENTION_CMD
 
 
 #Initializing hotstorage
-echo "==> Setting up hotstorage"
-sudo-linux bin/radar-docker up -d hotstorage
-sudo-linux docker exec radarbase_hotstorage chmod +x /initdb.sh
-sudo-linux docker exec radarbase_hotstorage sh -c "/initdb.sh"
+#echo "==> Setting up hotstorage"
+#sudo-linux docker-compose up -d hotstorage
+#sudo-linux docker exec radarbase_hotstorage chmod +x /initdb.sh
+#sudo-linux docker exec radarbase_hotstorage sh -c "/initdb.sh"
 
 
 echo "==> Configuring MongoDB Connector"

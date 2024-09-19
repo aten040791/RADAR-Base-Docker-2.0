@@ -291,11 +291,14 @@ services:
     image: mongo:4.4.29
     networks:
       - hotstorage
+      - external
     container_name: radarbase_hotstorage
+    ports:
+      - "27017:27017"
     volumes:
       - "${MONGODB_DIR}/db:/data/db:rw"
       - "${MONGODB_DIR}/configdb:/data/configdb:rw"
-      - "./hotstorage/initdb.sh:/initdb.sh"
+      - "./hotstorage/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh"
     restart: always
     environment:
       RADAR_DB: ${HOTSTORAGE_NAME}
