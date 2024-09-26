@@ -6,6 +6,9 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." } ,
-    { "name": "ecg", "type": "float", "doc": "ECG signal (µV)." }
+    { "name": "ecg", "type": "float", "doc": "ECG signal (mV)." },
+    { "name": "heartRate",  "type":"int", "doc":"Heart rate" },
+    { "name": "measurementTimes", "type": "int", "doc":"Number of measurements when start and stop"},
+    { "name": "measurementCurrentState", "type": "int", "doc":"Start or stop"}
   ]
 }

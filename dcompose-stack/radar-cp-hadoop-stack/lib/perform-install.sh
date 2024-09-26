@@ -112,9 +112,9 @@ sudo-linux bin/radar-docker exec -T kafka-1 bash -c "$KAFKA_SCHEMA_RETENTION_CMD
 
 echo "==> Configuring MongoDB Connector"
 # Update sink-mongo.properties
-ensure_variable 'mongo.username=' $HOTSTORAGE_USERNAME etc/mongodb-connector/sink-mongo.properties
-ensure_variable 'mongo.password=' $HOTSTORAGE_PASSWORD etc/mongodb-connector/sink-mongo.properties
-ensure_variable 'mongo.database=' $HOTSTORAGE_NAME etc/mongodb-connector/sink-mongo.properties
+#ensure_variable 'mongo.username=' $HOTSTORAGE_USERNAME etc/mongodb-connector/sink-mongo.properties
+#ensure_variable 'mongo.password=' $HOTSTORAGE_PASSWORD etc/mongodb-connector/sink-mongo.properties
+#ensure_variable 'mongo.database=' $HOTSTORAGE_NAME etc/mongodb-connector/sink-mongo.properties
 
 KAFKA_INIT_OPTS=(
     --rm -v "$PWD/etc/schema:/schema/conf"
@@ -122,7 +122,7 @@ KAFKA_INIT_OPTS=(
   )
 
 # Set topics
-ensure_variable 'topics=' "android_polar_h10_ecg" etc/mongodb-connector/sink-mongo.properties
+#ensure_variable 'topics=' "android_polar_h10_ecg" etc/mongodb-connector/sink-mongo.properties
 
 echo "==> Configuring HDFS Connector"
 if [ -z "${COMBINED_RAW_TOPIC_LIST}"]; then
